@@ -16,48 +16,62 @@
 ### Association
 
 - has_many :items
+- has_many :purchase_records
 
 ## items テーブル
 
-| Column                 | Type       | Options     |
-|------------------------|------------|-------------|
-| item_name              | string     | null: false |
-| description            | text       | null: false |
-| category               | string     | null: false |
-| condition              | string     | null: false |
-| shipping_fee_burden    | string     | null: false |
-| shipping_form_location | string     | null: false |
-| delivery_time          | string     | null: false |
-| price                  | integer    | null: false |
-| user_id                | references | null: false, foreign_key: true |
-
-**備考**: 画像はActiveStorageで実装するため、データベースには含まれません。
+| Column                    | Type       | Options     |
+|---------------------------|------------|-------------|
+| item_name                 | string     | null: false |
+| description               | text       | null: false |
+| price                     | integer    | null: false |
+| user                      | references | null: false, foreign_key: true |
+| category_id               | integer    | null: false, foreign_key: true|
+| condition_id              | integer    | null: false, foreign_key: true|
+| shipping_fee_burden_id    | integer    | null: false, foreign_key: true|
+| shipping_form_location_id | integer    | null: false, foreign_key: true|
+| delivery_time_id          | integer    | null: false, foreign_key: true|
 
 ### Association
 
-- has_one :shipping_information
+- has_one :purchase_record
 - belongs_to :user
-- belongs_to_active_hash :category
-- belongs_to_active_hash :condition
-- belongs_to_active_hash :shipping_fee_burden
-- belongs_to_active_hash :shipping_form_location
-- belongs_to_active_hash :delivery_time
+- belongs_to :category
+- belongs_to :condition
+- belongs_to :shipping_fee_burden
+- belongs_to :shipping_form_location
+- belongs_to :delivery_time
 
-## shipping_informations テーブル
+**備考**: 画像はActiveStorageで実装するため、データベースには含まれません。
+
+## purchase_records テーブル
+
+| Column | Type       | Options                        |
+|--------|------------|--------------------------------|
+| user   | references | null: false, foreign_key: true |
+| item   | references | null: false, foreign_key: true |
+
+### Association
+
+- belongs_to :user
+- belongs_to :item
+- has_one :shipping_address
+
+## shipping_addresses テーブル
 
 | Column                | Type       | Options                        |
 |-----------------------|------------|--------------------------------|
 | postal_code           | string     | null: false                    |
-| prefecture_id         | string     | null: false                    |
 | city_locality         | string     | null: false                    |
 | address               | string     | null: false                    |
 | building_name         | string     | null: false                    |
 | phone_number          | string     | null: false                    |
-| item_id               | references | null: false, foreign_key: true |
+| item                  | references | null: false, foreign_key: true |
+| prefecture_id         | integer    | null: false, foreign_key: true |
 
 ### Association
 
-- belongs_to :item
-- belongs_to_active_hash :prefecture
+- belongs_to :purchase_record
+- belongs_to :prefecture
 
 **備考**: クレジットカード情報はデータベースには保存しません。
