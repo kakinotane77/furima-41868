@@ -54,15 +54,15 @@
 
 ## shipping_addresses テーブル
 
-| Column                | Type       | Options                        |
-|-----------------------|------------|--------------------------------|
-| postal_code           | string     | null: false                    |
-| city_locality         | string     | null: false                    |
-| address               | string     | null: false                    |
-| building_name         | string     |                                |
-| phone_number          | string     | null: false                    |
-| purchase_record       | references | null: false, foreign_key: true |
-| prefecture_id         | integer    | null: false                    |
+| Column                    | Type       | Options     |
+|---------------------------|------------|-------------|
+| postal_code               | string     | null: false |
+| city_locality             | string     | null: false |
+| address                   | string     | null: false |
+| building_name             | string     |             |
+| phone_number              | string     | null: false |
+| purchase_record           | references | null: false, foreign_key: true |
+| shipping_form_location_id | integer    | null: false |
 
 ### Association
 
