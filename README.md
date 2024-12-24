@@ -36,11 +36,6 @@
 
 - has_one :purchase_record
 - belongs_to :user
-- belongs_to :category
-- belongs_to :condition
-- belongs_to :shipping_fee_burden
-- belongs_to :shipping_form_location
-- belongs_to :delivery_time
 
 **備考**: 画像はActiveStorageで実装するため、データベースには含まれません。
 
