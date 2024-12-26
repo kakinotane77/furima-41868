@@ -1,4 +1,4 @@
-class Condition < ActiveHash::Base
+class Category < ActiveHash::Base
   self.data = [
     { id: 1, name: '---' },
     { id: 2, name: '新品・未使用、未使用に近い' },
@@ -12,4 +12,7 @@ class Condition < ActiveHash::Base
     { id: 10, name: 'ハンドメイド' },
     { id: 11, name: 'その他' }
   ]
+
+  include ActiveHash::Associations
+  has_many :items
 end
