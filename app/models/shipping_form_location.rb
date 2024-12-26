@@ -1,4 +1,4 @@
-class Shipping_form_location < ActiveHash::Base
+class ShippingFormLocation < ActiveHash::Base
   self.data = [
     { id: 1, name: '---' },
     { id: 2, name: '北海道' },
