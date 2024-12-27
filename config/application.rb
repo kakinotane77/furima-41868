@@ -11,6 +11,8 @@ module Furima41868
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.0
     config.i18n.default_locale = :en
+    config.time_zone = 'Tokyo'
+    config.active_storage.variant_processor = :mini_magick
 
     # Configuration for the application, engines, and railties goes here.
     #
