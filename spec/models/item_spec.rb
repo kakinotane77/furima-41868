@@ -31,12 +31,12 @@ RSpec.describe Item, type: :model do
       expect(@item.errors.full_messages).to include('Price must be a valid half-width number between 300 and 9,999,999')
     end
     it 'priceが¥300未満では登録できない' do
-      @item.price = '299'
+      @item.price = 299
       @item.valid?
       expect(@item.errors.full_messages).to include('Price must be a valid half-width number between 300 and 9,999,999')
     end
     it 'priceが¥9,999,999より大きい場合では登録できない' do
-      @item.price = '10,000,000'
+      @item.price = 10_000_000
       @item.valid?
       expect(@item.errors.full_messages).to include('Price must be a valid half-width number between 300 and 9,999,999')
     end
@@ -46,27 +46,27 @@ RSpec.describe Item, type: :model do
       expect(@item.errors.full_messages).to include("Image can't be blank")
     end
     it 'category_idが1（---）では登録できない' do
-      @item.category_id = '1'
+      @item.category_id = 1
       @item.valid?
       expect(@item.errors.full_messages).to include("Category can't be blank")
     end
     it 'condition_idが1（---）では登録できない' do
-      @item.condition_id = '1'
+      @item.condition_id = 1
       @item.valid?
       expect(@item.errors.full_messages).to include("Condition can't be blank")
     end
     it 'shipping_fee_burden_idが1（---）では登録できない' do
-      @item.shipping_fee_burden_id = '1'
+      @item.shipping_fee_burden_id = 1
       @item.valid?
       expect(@item.errors.full_messages).to include("Shipping fee burden can't be blank")
     end
     it 'shipping_form_location_idが1（---）では登録できない' do
-      @item.shipping_form_location_id = '1'
+      @item.shipping_form_location_id = 1
       @item.valid?
       expect(@item.errors.full_messages).to include("Shipping form location can't be blank")
     end
     it 'delivery_time_idが1（---）では登録できない' do
-      @item.delivery_time_id = '1'
+      @item.delivery_time_id = 1
       @item.valid?
       expect(@item.errors.full_messages).to include("Delivery time can't be blank")
     end
