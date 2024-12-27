@@ -7,15 +7,13 @@ class Item < ApplicationRecord
   belongs_to :shipping_fee_burden
   belongs_to :shipping_form_location
   belongs_to :user
-  has_one :purchase_record
+  # has_one :purchase_record
   has_one_attached :image
 
   validates :item_name, presence: { message: "can't be blank" }
   validates :description, presence: { message: "can't be blank" }
 
   validates :price, presence: { message: "can't be blank" }
-  validates :price, format: { with: /\A\d+\z/, message: 'must be a valid half-width number' },
-                    if: -> { price.present? }
   validates :price,
             numericality: { only_integer: true, greater_than_or_equal_to: 300, less_than_or_equal_to: 9_999_999,
                             message: 'must be a valid half-width number between 300 and 9,999,999' },
