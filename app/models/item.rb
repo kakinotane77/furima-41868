@@ -7,7 +7,7 @@ class Item < ApplicationRecord
   belongs_to :shipping_fee_burden
   belongs_to :shipping_form_location
   belongs_to :user
-  # has_one :purchase_record
+  has_one :order
   has_one_attached :image
 
   validates :item_name, presence: { message: "can't be blank" }
