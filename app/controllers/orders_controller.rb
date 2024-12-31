@@ -1,25 +1,19 @@
 class OrdersController < ApplicationController
-  before_action :authenticate_user!, except: :index
-  before_action :set_item, only: [:index, :new, :create]
+  before_action :authenticate_user!
+  before_action :set_item, only: [:index, :create]
 
   def index
-    # gon.public_key = ENV['PAYJP_PUBLIC_KEY']
+    gon.public_key = ENV['PAYJP_PUBLIC_KEY']
     @order_address = OrderAddress.new
-  end
-
-  def new
-    @order_address = OrderAddress.new
-    # gon.public_key = ENV['PAYJP_PUBLIC_KEY']
   end
 
   def create
-    @order_address = OrderAddress.new(order_params)
-    if @order_address.valid?
-      pay_item
-      @order_address.save
+    @order_address = OrderAddress.new(order_params.merge(item_id: @item.id))
+
+    if @order_address.valid? && pay_item && @order_address.save
       redirect_to root_path
     else
-      # gon.public_key = ENV['PAYJP_PUBLIC_KEY']
+      gon.public_key = ENV['PAYJP_PUBLIC_KEY']
       render :index, status: :unprocessable_entity
     end
   end
@@ -28,6 +22,8 @@ class OrdersController < ApplicationController
 
   def set_item
     @item = Item.find(params[:item_id])
+  rescue ActiveRecord::RecordNotFound
+    redirect_to root_path, alert: 'Item not found'
   end
 
   def order_params
@@ -40,9 +36,7 @@ class OrdersController < ApplicationController
       :item_id,
       :shipping_form_location_id,
       :token
-    ).merge(
-      user_id: current_user.id
-    )
+    ).merge(user_id: current_user.id)
   end
 
   def pay_item
@@ -52,5 +46,8 @@ class OrdersController < ApplicationController
       card: order_params[:token],
       currency: 'jpy'
     )
+    true
+  rescue StandardError
+    false
   end
 end
