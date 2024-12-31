@@ -1,6 +1,8 @@
 class OrdersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_item, only: [:index, :create]
+  before_action :check_item_owner, only: [:index]
+  before_action :check_order_status, only: [:index, :create]
 
   def index
     gon.public_key = ENV['PAYJP_PUBLIC_KEY']
@@ -23,7 +25,19 @@ class OrdersController < ApplicationController
   def set_item
     @item = Item.find(params[:item_id])
   rescue ActiveRecord::RecordNotFound
-    redirect_to root_path, alert: 'Item not found'
+    redirect_to root_path
+  end
+
+  def check_order_status
+    return unless @item.order.present?
+
+    redirect_to root_path
+  end
+
+  def check_item_owner
+    return unless @item.user_id == current_user.id
+
+    redirect_to root_path
   end
 
   def order_params
